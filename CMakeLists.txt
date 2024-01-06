@@ -9,6 +9,6 @@ project(${TARGET})
 add_subdirectory(${GOOGLE_TEST_SOURCE})
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
-add_executable(${TARGET} main.cpp HopScochHasher/HopScotchHasher.hpp HopScochHasher/HopScotchHasherCore.inl HopScochHasher/HopScotchHasherInter.inl)
+add_executable(${TARGET} main.cpp HopScochHasher/HopScotchHasher.hpp HopScochHasher/HopScotchHasherCore.inl HopScochHasher/HopScotchHasherInter.inl ExtendibleHasher/ExtendibleHasher.hpp)
 target_link_libraries(${TARGET} gtest gtest_main)
 
