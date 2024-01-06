@@ -28,18 +28,15 @@ size_t HopScotchHasher<HashObj>::getSize() {
 
 template<typename HashObj>
 bool HopScotchHasher<HashObj>::remove(const HashObj &element) {
-    size_t pos{hash(element)};
+    int pos{findPos(element)};
 
-    for(int i{0}; i< MAX_DIST; ++i){
-        if(HopScTable[pos].Hop[i] == true && HopScTable[pos + i].element == element) {
-            HopScTable[pos + i].isActive = false;
-            HopScTable[pos+i].Hop[i] = false;
-            --currentSize;
-            return true;
-        }
+    if(pos == -1){
+        return false;
     }
 
-    return false;
+    HopScTable[static_cast<size_t>(pos)].isActive = false;
+    --currentSize;
+    return true;
 }
 
 template<typename HashObj>
@@ -47,5 +44,18 @@ HopScotchHasher<HashObj>::HopScotchHasher(int capacity, HopScotchHasher::HashFun
 : HopScTable(capacity),
 hashFunc(hf)
 {}
+
+template<typename HashObj>
+void HopScotchHasher<HashObj>::printTable() {
+    for(auto& x: HopScTable){
+        std::cout<<x.isActive<<' ';
+        std::cout<<x.element<<' ';
+            for(auto i: x.Hop)
+                std::cout<<i;
+            std::cout<<std::endl;
+
+    }
+    std::cout<<"table size: "<<currentSize<<std::endl;
+}
 
 #endif //ADTEHASHING_HOPSCOTCHHASHERINTER_INL

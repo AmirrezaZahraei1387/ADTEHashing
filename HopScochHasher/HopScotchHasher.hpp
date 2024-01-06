@@ -3,6 +3,7 @@
 //
 #ifndef ADTEHASHING_HOPSCOTCHHASHER_HPP
 #define ADTEHASHING_HOPSCOTCHHASHER_HPP
+#include <iostream>
 #include <functional>
 #include <cstddef>
 #include <vector>
@@ -23,6 +24,7 @@ public:
     void makeEmpty();
     size_t getSize();
     bool remove(const HashObj& element);
+    void printTable();
 
 private:
 

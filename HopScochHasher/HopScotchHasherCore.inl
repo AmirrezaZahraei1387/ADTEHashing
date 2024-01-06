@@ -10,14 +10,18 @@
 template<typename HashObj>
 int HopScotchHasher<HashObj>::findPos(const HashObj &element) {
 
-    size_t pos{hash(element)};
+    int pos{hash(element)};
 
     for(int i{0}; i< MAX_DIST; ++i){
         if(pos >= HopScTable.size())
             pos -= HopScTable.size();
 
-        if(isActive(pos) && HopScTable[pos].element == element)
-            return pos;
+        if(pos < HopScTable.size() && pos >=0) {
+            if (isActive(pos) && HopScTable[pos].element == element) {
+
+                return pos;
+            }
+        }
         ++pos;
     }
 
@@ -79,6 +83,9 @@ bool HopScotchHasher<HashObj>::insert(const HashObj &element) {
             HopScTable[pos].element = element;
             ++currentSize;
             return true;
+
+        }else if(HopScTable[pos + i].element == element){
+            return false;
         }
     }
 
@@ -116,13 +123,11 @@ bool HopScotchHasher<HashObj>::insert(HashObj &&element) {
     if(pos >= HopScTable.size()){
         rehash(pos+MAX_DIST);
     }
-
     // attempt to drag the element into the list
     // without moving anything
     for(int i{0}; i<MAX_DIST; ++i){
         if(HopScTable[pos].Hop[i] == false && !isActive(pos+i)){
             pos = pos + i;
-
             if(pos >= HopScTable.size()){
                 rehash(pos);
                 break;
@@ -134,6 +139,8 @@ bool HopScotchHasher<HashObj>::insert(HashObj &&element) {
 
             ++currentSize;
             return true;
+        }else if(HopScTable[pos + i].element == element){
+            return false;
         }
     }
 
